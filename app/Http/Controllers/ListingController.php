@@ -35,6 +35,7 @@ class ListingController extends \Illuminate\Routing\Controller {
         
         //Gate::authorize('view', $listing);
         
+        $listing->load(['images']);
         return Inertia::render(
             'Listing/Show', 
             [
