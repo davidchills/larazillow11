@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\ListingImage;
+use App\Models\User;
 
 class Listing extends Model 
 {
@@ -17,11 +19,11 @@ class Listing extends Model
     protected $sortable = ['price', 'created_at'];
 
     public function owner(): BelongsTo {
-        return $this->belongsTo(\App\Models\User::class, 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function images(): HasMany {
-        return $this->hasMany(\App\Models\ListingImage::class);
+        return $this->hasMany(ListingImage::class);
     }
 
     public function scopeMostRecent(Builder $query): Builder {
