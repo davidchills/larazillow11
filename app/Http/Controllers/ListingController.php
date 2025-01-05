@@ -7,7 +7,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Offer;
 
 class ListingController extends \Illuminate\Routing\Controller {
 
@@ -25,6 +26,7 @@ class ListingController extends \Illuminate\Routing\Controller {
                 'filters' => $filters,
                 'listings' => Listing::mostRecent()
                 ->filter($filters)
+                ->withoutSold()
                 ->paginate(10)
                 ->withQueryString()
             ]
@@ -33,13 +35,15 @@ class ListingController extends \Illuminate\Routing\Controller {
 
     public function show(Listing $listing): Response {
         
-        //Gate::authorize('view', $listing);
+        Gate::authorize('view', $listing);
         
         $listing->load(['images']);
+        $offer = !Auth::user() ? null : $listing->offers()->byMe()->first();
         return Inertia::render(
             'Listing/Show', 
             [
-                'listing' => $listing
+                'listing' => $listing,
+                'offerMade' => $offer
             ]
         );
     }
