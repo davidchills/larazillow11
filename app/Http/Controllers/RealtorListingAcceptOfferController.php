@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 //use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class RealtorListingAcceptOfferController extends Controller {
     public function __invoke(Offer $offer) {
          
         $listing = $offer->listing;
-        $this->authorize('update', $listing);
+        Gate::authorize('update', $listing);
 
         // Accept selected offer
          $offer->update(['accepted_at' => now()]);

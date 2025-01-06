@@ -61,6 +61,8 @@
 			</div>
 		</Box>
 	</section>
+	<EmptyState v-else>No Listings Yet</EmptyState>
+
 	<section v-if="listings.data.length" class="w-full flex justify-center mt-4 mb-4">
 		<Pagination :links="listings.links" />
 	</section>
@@ -72,6 +74,7 @@ import Pagination from '@/Components/UI/Pagination.vue'
 import Price from '@/Components/Price.vue'
 import ListingSpace from '@/Components/UI/ListingSpace.vue'
 import ListingAddress from '@/Components/ListingAddress.vue'
+import EmptyState from '@/Components/UI/EmptyState.vue'
 import RealtorFilters from '@/Pages/Realtor/Index/Components/RealtorFilters.vue'
 import { Link, usePage } from '@inertiajs/vue3'
 defineProps({
